@@ -1,5 +1,5 @@
 /* 세은 운동 PWA 서비스워커 - network-first, 오프라인은 캐시로 */
-var CACHE = 'seeun-workout-v2';
+var CACHE = 'seeun-workout-v3';
 var ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-192.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', function (e) {
