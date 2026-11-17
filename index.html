@@ -5,21 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#ec4899">
+<meta name="theme-color" content="#FBE049">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>운동 퀘스트 · 세은</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='88'%3E%F0%9F%92%AA%3C/text%3E%3C/svg%3E">
-
+<title>세은 운동</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%23FBE049'/%3E%3Crect%20x='18'%20y='18'%20width='64'%20height='64'%20rx='16'%20fill='%23fff'/%3E%3Cpath%20d='M33%2051l11%2011%2024-26'%20fill='none'%20stroke='%232F8F52'%20stroke-width='9'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<meta name="apple-mobile-web-app-title" content="운동 퀘스트">
+<meta name="apple-mobile-web-app-title" content="세은 운동">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
 :root{
-  --ink:#2b2140;
-  --ink-2:#6a6385;
-  --rainbow:linear-gradient(90deg,#ff5fa2 0%,#ff8a4d 22%,#ffd93d 40%,#5fe08a 60%,#4bc8ff 80%,#a77bff 100%);
+  --yellow:#FBE049;
+  --yellow-dk:#EED12F;
+  --navy:#1E1B7A;
+  --ink:#241F3A;
+  --ink-2:#6E6A85;
+  --ink-3:#9A94AE;
+  --cream:#FDF8E7;
+  --track:#EFE8CF;
+  --done-bg:#DFF2DD;
+  --done-ink:#2F7A4B;
+  --done:#2F8F52;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -29,349 +36,150 @@ body{
   min-height:100dvh;
   color:var(--ink);
   font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic","맑은 고딕",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  font-size:17px;
+  font-size:16px;
   line-height:1.45;
   letter-spacing:-.02em;
   -webkit-font-smoothing:antialiased;
   -webkit-tap-highlight-color:transparent;
   overflow-x:hidden;
-  padding-bottom:calc(106px + env(safe-area-inset-bottom));
-  background:
-    radial-gradient(70vw 55vw at 4% -4%, #ffe1f1 0%, rgba(255,225,241,0) 62%),
-    radial-gradient(64vw 52vw at 102% 2%, #dbe9ff 0%, rgba(219,233,255,0) 60%),
-    radial-gradient(88vw 62vw at 50% 104%, #d8fbea 0%, rgba(216,251,234,0) 64%),
-    linear-gradient(172deg,#fff8fd 0%,#f7f9ff 46%,#f1fffa 100%);
-  background-attachment:fixed;
+  background:var(--yellow);
+  padding-bottom:calc(34px + env(safe-area-inset-bottom));
 }
 button,a{font-family:inherit}
-.wrap{max-width:600px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 14px 8px}
+.wrap{max-width:600px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 14px 6px}
 
-/* ================= HERO ================= */
-.hero{
-  position:relative;border-radius:32px;padding:20px 20px 18px;
-  background:linear-gradient(160deg,#ffffff 0%,#fffafd 58%,#f7fbff 100%);
-  border:2px solid #fff;
-  box-shadow:0 24px 46px -26px rgba(120,70,170,.55), inset 0 3px 0 rgba(255,255,255,.9);
-  overflow:hidden;
-  transition:box-shadow .5s, border-color .5s;
-}
-.hero::before{
-  content:"";position:absolute;left:-30%;right:-30%;top:-90px;height:170px;
-  background:radial-gradient(closest-side, rgba(255,143,199,.32), transparent);
-  pointer-events:none;
-}
-.hero.cleared{border-color:#ffe6a8;box-shadow:0 26px 54px -24px rgba(255,168,40,.62), 0 0 0 3px rgba(255,205,90,.30) inset}
-.hero-top{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-h1{margin:0;font-size:24px;font-weight:900;letter-spacing:-.045em;display:flex;align-items:center;gap:8px}
-h1 .h-ico{font-size:26px;line-height:1}
-.date-line{margin:5px 0 0;font-size:13px;font-weight:700;color:var(--ink-2);line-height:1.4}
+/* ================= TOP ================= */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 4px 14px}
+h1{margin:0;display:flex;align-items:center;gap:8px;font-size:23px;font-weight:900;letter-spacing:-.045em;color:#1B1730}
+h1 .ic{font-size:22px;line-height:1}
 .reset{
   flex:none;display:inline-flex;align-items:center;gap:5px;
-  min-height:46px;padding:0 15px;border-radius:999px;
-  font-size:14px;font-weight:800;color:#7b5e9e;background:#f7f0ff;
-  border:1.5px solid #e9dbff;cursor:pointer;transition:transform .15s, background .2s;
+  min-height:42px;padding:0 15px;border-radius:999px;border:0;cursor:pointer;
+  font-size:14px;font-weight:900;color:var(--navy);background:#fff;
+  box-shadow:0 8px 18px -12px rgba(70,56,0,.7);
+  transition:transform .14s ease, box-shadow .2s ease;
   touch-action:manipulation;
 }
-.reset:active{transform:scale(.94);background:#efe2ff}
-.reset span{font-size:16px;line-height:1}
+.reset:active{transform:scale(.95)}
+.reset span{font-size:15px;line-height:1}
 
-.hud{position:relative;display:flex;align-items:center;gap:12px;margin-top:16px}
-.medal{
-  flex:none;width:74px;height:74px;border-radius:24px;display:grid;place-items:center;
-  font-size:34px;font-weight:900;letter-spacing:-.04em;color:#fff;
-  background:linear-gradient(140deg,#cfc9e0,#a89ec4);
-  box-shadow:0 10px 20px -10px rgba(110,90,150,.7), inset 0 2px 0 rgba(255,255,255,.5);
-  transition:all .45s cubic-bezier(.22,1,.36,1);
+/* ================= SUMMARY ================= */
+.sum{
+  background:#fff;border-radius:26px;padding:16px 18px 17px;
+  box-shadow:0 14px 28px -22px rgba(80,64,0,.6);
 }
-.medal-e{background:linear-gradient(140deg,#7fe9cf,#25c3a4);box-shadow:0 12px 22px -10px rgba(37,195,164,.8)}
-.medal-d{background:linear-gradient(140deg,#7cd9ff,#1fa9ee);box-shadow:0 12px 22px -10px rgba(31,169,238,.8)}
-.medal-c{background:linear-gradient(140deg,#8fb6ff,#3f7bf0);box-shadow:0 12px 22px -10px rgba(63,123,240,.8)}
-.medal-b{background:linear-gradient(140deg,#c39cff,#7b45e8);box-shadow:0 12px 22px -10px rgba(123,69,232,.8)}
-.medal-a{background:linear-gradient(140deg,#ffc65c,#f08a13);box-shadow:0 14px 24px -10px rgba(240,138,19,.85)}
-.medal-s{
-  background:linear-gradient(140deg,#fff2b0,#ffc93d 45%,#ff8f1f);color:#5a3400;
-  box-shadow:0 16px 30px -8px rgba(255,160,20,.85), 0 0 0 4px rgba(255,214,120,.35);
-  animation:medalGlow 2s ease-in-out infinite;
-}
-@keyframes medalGlow{
-  0%,100%{transform:scale(1);box-shadow:0 16px 30px -8px rgba(255,160,20,.85), 0 0 0 4px rgba(255,214,120,.30)}
-  50%{transform:scale(1.05);box-shadow:0 18px 34px -6px rgba(255,170,30,.95), 0 0 0 8px rgba(255,214,120,.20)}
-}
-.pct-row{display:flex;align-items:baseline;gap:1px;line-height:1}
-.pct{
-  font-size:58px;font-weight:900;letter-spacing:-.07em;line-height:1;font-variant-numeric:tabular-nums;
-  background:linear-gradient(140deg,#ff2f78,#8a5cff 52%,#0090d8);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
-}
-.pct-sym{font-size:20px;font-weight:900;color:#b9aecf;margin-left:2px}
-.cnt{
-  display:inline-block;margin-left:auto;font-size:13px;font-weight:800;color:var(--ink-2);
-  background:#f6f1ff;border-radius:999px;padding:5px 12px;
-  font-variant-numeric:tabular-nums;white-space:nowrap;
-}
-.cnt b{font-size:18px;color:#7b45e8;font-weight:900}
-.bar{position:relative;height:18px;border-radius:999px;margin-top:16px;background:linear-gradient(90deg,#ffe3ef,#e4eaff 45%,#ddf7ec);box-shadow:inset 0 1px 3px rgba(90,60,140,.14);overflow:hidden}
-.bar > i{
-  display:block;height:100%;width:0%;border-radius:999px;
-  background:var(--rainbow);
-  box-shadow:0 2px 8px rgba(150,90,255,.35);
-  transition:width .65s cubic-bezier(.22,1,.36,1);
-}
-@keyframes slide{from{background-position:0% 0}to{background-position:220% 0}}
-.chips{display:flex;flex-wrap:nowrap;gap:6px;margin-top:12px;overflow:hidden}
-.chip{font-size:11.5px;font-weight:800;padding:6px 9px;border-radius:999px;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
-.chip-xp{color:#a85900;background:#fff1d6;border:1px solid #ffe0a8}
-.chip-streak{color:#c02a5e;background:#ffe5ee;border:1px solid #ffcede}
-.chip-rank{color:#4b2fa8;background:#ece4ff;border:1px solid #ddcfff}
+.sum-top{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.sum-cnt{display:flex;align-items:baseline;gap:5px;font-size:14px;font-weight:800;color:var(--ink-2)}
+.sum-cnt b{font-size:29px;font-weight:900;letter-spacing:-.045em;color:var(--navy);font-variant-numeric:tabular-nums;line-height:1.05}
+.sum-pct{font-size:22px;font-weight:900;letter-spacing:-.03em;color:var(--navy);font-variant-numeric:tabular-nums}
+.sum.full .sum-pct{color:var(--done)}
+.bar{height:13px;border-radius:999px;background:var(--track);overflow:hidden;margin-top:11px}
+.bar > i{display:block;height:100%;width:0%;border-radius:999px;background:var(--navy);transition:width .55s cubic-bezier(.22,1,.36,1)}
+.sum.full .bar > i{background:var(--done)}
+.sum-date{margin:10px 0 0;font-size:12.5px;font-weight:700;color:var(--ink-3)}
 
 /* ================= SECTIONS ================= */
-.sec{margin-top:26px}
-.sec-head{display:flex;align-items:center;gap:10px;padding:0 6px 11px}
-.sec-ico{
-  flex:none;width:40px;height:40px;border-radius:14px;display:grid;place-items:center;font-size:21px;
-  background:var(--a-tint,#fff0f7);border:2px solid var(--a-soft,#ffd6e7);
-}
-.sec-head h2{margin:0;font-size:17px;font-weight:900;letter-spacing:-.035em;line-height:1.25;color:var(--ink)}
-.sec-meta{display:block;margin-top:1px;font-size:12px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
-.sec-cnt{
-  margin-left:auto;flex:none;font-size:13px;font-weight:900;color:#fff;
-  padding:6px 12px;border-radius:999px;background:var(--a,#ff5fa2);
-  box-shadow:0 6px 14px -6px var(--a,#ff5fa2);font-variant-numeric:tabular-nums;
-}
-.cards{display:flex;flex-direction:column;gap:18px}
-
-/* ================= CARD ================= */
 .card{
-  position:relative;
-  border-radius:32px;
-  padding:11px 11px 13px;
-  background:var(--tint,#faf7ff);
-  border:2.5px solid var(--soft,#eee5fb);
-  box-shadow:0 16px 30px -22px rgba(90,50,140,.75);
-  transition:background .35s ease, border-color .35s ease, box-shadow .35s ease;
-  overflow:hidden;
+  background:#fff;border-radius:26px;padding:15px 14px 15px;margin-top:13px;
+  box-shadow:0 14px 28px -22px rgba(80,64,0,.55);
 }
-.card.done{
-  background:var(--tint,#faf7ff);
-  border-color:var(--c,#ff5fa2);
-  box-shadow:0 20px 36px -20px var(--c,#ff5fa2);
+.c-head{display:flex;align-items:center;gap:9px}
+.c-ico{
+  flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  font-size:17px;line-height:1;background:var(--cream);
 }
-.card.is-now{border-color:var(--c,#ff5fa2);box-shadow:0 0 0 3px rgba(255,255,255,.9), 0 18px 32px -20px var(--c,#ff5fa2)}
+.c-tit{min-width:0}
+.c-name{margin:0;font-size:16.5px;font-weight:900;letter-spacing:-.035em;line-height:1.2;color:var(--ink);word-break:keep-all}
+.c-meta{display:block;margin-top:2px;font-size:11.5px;font-weight:700;color:var(--ink-3);word-break:keep-all}
+.c-cnt{margin-left:auto;flex:none;font-size:14px;font-weight:900;color:var(--navy);font-variant-numeric:tabular-nums}
+.card.full .c-cnt{color:var(--done)}
+.c-bar{height:9px;border-radius:999px;background:var(--track);overflow:hidden;margin-top:11px}
+.c-bar > i{display:block;height:100%;width:0%;border-radius:999px;background:var(--navy);transition:width .5s cubic-bezier(.22,1,.36,1)}
+.card.full .c-bar > i{background:var(--done)}
+.rows{margin-top:12px;display:flex;flex-direction:column;gap:8px}
 
-/* --- thumbnail link --- */
+/* ================= ROW ================= */
+.row{
+  display:flex;align-items:center;gap:9px;
+  background:var(--cream);border-radius:16px;padding:7px 8px;
+  transition:background .25s ease;
+}
+.row.done{background:var(--done-bg)}
 .thumb{
-  position:relative;display:block;width:100%;
-  aspect-ratio:16/9;border-radius:24px;overflow:hidden;
-  background:linear-gradient(135deg,var(--c,#ff5fa2),var(--c2,#d81f5f));
-  text-decoration:none;color:#fff;
-  -webkit-tap-highlight-color:transparent;
-  box-shadow:0 10px 20px -14px rgba(40,10,60,.9);
-  touch-action:manipulation;
-  transition:transform .14s ease;
+  flex:none;position:relative;display:block;width:74px;height:43px;border-radius:10px;
+  overflow:hidden;background:#E7DFC2;text-decoration:none;-webkit-tap-highlight-color:transparent;
 }
-.thumb:active{transform:scale(.982)}
 .thumb img{display:block;width:100%;height:100%;object-fit:cover}
-.thumb .play{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:66px;height:66px;border-radius:50%;
-  background:rgba(18,8,26,.46);
-  border:3px solid rgba(255,255,255,.92);
-  display:grid;place-items:center;
-  box-shadow:0 10px 24px -8px rgba(0,0,0,.6);
-}
+.thumb .play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(24,20,45,.16)}
 .thumb .play::after{
-  content:"";margin-left:5px;
-  border-style:solid;border-width:13px 0 13px 22px;
-  border-color:transparent transparent transparent #fff;
+  content:"";width:0;height:0;border-style:solid;border-width:7px 0 7px 11px;
+  border-color:transparent transparent transparent #fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55));
 }
-.thumb .play-txt{
-  position:absolute;left:10px;bottom:10px;
-  display:inline-flex;align-items:center;gap:5px;
-  padding:6px 12px;border-radius:999px;
-  font-size:12.5px;font-weight:900;letter-spacing:-.01em;
-  color:#231225;background:rgba(255,255,255,.94);
-  box-shadow:0 6px 14px -8px rgba(0,0,0,.8);
+.thumb:active{opacity:.82}
+.thumb.emoji{display:grid;place-items:center;font-size:22px;line-height:1;background:#F6EFDA}
+.hit{
+  flex:1;min-width:0;display:flex;align-items:center;gap:9px;
+  padding:3px 2px;border:0;border-radius:12px;background:none;text-align:left;cursor:pointer;
+  -webkit-appearance:none;appearance:none;touch-action:manipulation;
 }
-.thumb .dur{
-  position:absolute;right:9px;bottom:9px;
-  padding:4px 8px;border-radius:8px;
-  font-size:12.5px;font-weight:900;color:#fff;
-  background:rgba(15,8,20,.78);
-  font-variant-numeric:tabular-nums;
+.hit:active{opacity:.65}
+.body{flex:1;min-width:0;display:block}
+.t{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  font-size:15px;font-weight:800;line-height:1.3;letter-spacing:-.025em;color:var(--ink);word-break:keep-all;
 }
-.card.done .thumb::after{
-  content:"클리어 ✓";position:absolute;left:10px;top:10px;
-  padding:7px 13px;border-radius:999px;
-  font-size:13px;font-weight:900;color:#0d5c34;
-  background:linear-gradient(135deg,#c6ffdc,#66efa2);
-  box-shadow:0 8px 16px -8px rgba(0,0,0,.7);
+.s{display:block;margin-top:2px;font-size:12px;font-weight:600;line-height:1.35;color:var(--ink-2);word-break:keep-all}
+.row.done .t{color:var(--done-ink);text-decoration:line-through;text-decoration-color:#7FBE97;text-decoration-thickness:2px}
+.row.done .s{color:#69A37F}
+.chk{
+  flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  background:#fff;border:2px solid #DED5B2;transition:background .2s ease, border-color .2s ease;
 }
+.chk svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .15s ease}
+.row.done .chk{background:var(--done);border-color:var(--done)}
+.row.done .chk svg{opacity:1}
 
-/* gym banner (no video) */
-.banner{
-  position:relative;display:grid;place-items:center;
-  height:104px;border-radius:24px;
-  background:linear-gradient(120deg,var(--c,#ff9f1c),var(--c2,#e07a06));
-  color:#fff;overflow:hidden;
-}
-.banner .b-ico{font-size:50px;line-height:1;filter:drop-shadow(0 8px 12px rgba(0,0,0,.28));animation:bounce 2.4s ease-in-out infinite}
-.banner .b-tag{
-  position:absolute;left:12px;top:12px;padding:5px 11px;border-radius:999px;
-  font-size:11.5px;font-weight:900;letter-spacing:.06em;color:#4a2400;
-  background:rgba(255,255,255,.92);
-}
-.banner::after{
-  content:"";position:absolute;right:-40px;top:-60px;width:170px;height:170px;border-radius:50%;
-  background:radial-gradient(closest-side, rgba(255,255,255,.28), transparent);
-}
-.banner.care{height:120px}
-.banner.care .b-ico{
-  width:88px;height:88px;border-radius:50%;display:grid;place-items:center;font-size:42px;
-  background:radial-gradient(closest-side,#ffffff,rgba(255,255,255,.92) 70%,rgba(255,255,255,.72));
-  box-shadow:0 12px 24px -12px rgba(80,20,110,.6), inset 0 2px 0 rgba(255,255,255,.95);
-}
-.card.done .banner::before{
-  content:"클리어 ✓";position:absolute;right:10px;top:10px;z-index:2;
-  padding:7px 13px;border-radius:999px;
-  font-size:13px;font-weight:900;color:#0d5c34;
-  background:linear-gradient(135deg,#c6ffdc,#66efa2);
-  box-shadow:0 8px 16px -8px rgba(0,0,0,.7);
-}
+/* ================= FOOT ================= */
+.foot{margin:18px 10px 4px;text-align:center;font-size:12px;line-height:1.75;font-weight:600;color:rgba(40,34,10,.52);word-break:keep-all}
 
-/* meta + button */
-.meta{padding:13px 5px 0}
-.row2{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.badge{
-  display:none;font-size:11px;font-weight:900;letter-spacing:.04em;
-  color:#3d2100;background:linear-gradient(135deg,#ffe680,#ffb02e);
-  padding:4px 9px;border-radius:9px;
-}
-.badge.on{display:inline-block;animation:bounce 1.4s ease-in-out infinite}
-@keyframes bounce{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.06)}}
-.chan{
-  margin-left:auto;font-size:12px;font-weight:800;color:#8d84a8;
-  max-width:52%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.title{margin:8px 0 0;font-size:19px;font-weight:800;line-height:1.32;letter-spacing:-.035em;word-break:keep-all}
-.sub{margin:5px 0 0;font-size:13.5px;font-weight:600;line-height:1.45;color:var(--ink-2);word-break:keep-all}
-.xp-line{margin-top:6px;font-size:12px;font-weight:900;color:var(--c2,#d81f5f);opacity:.9}
-
-.done-btn{
-  width:100%;min-height:60px;margin-top:12px;
-  display:flex;align-items:center;justify-content:center;gap:9px;
-  border:0;border-radius:22px;cursor:pointer;
-  font-size:20px;font-weight:900;letter-spacing:-.02em;color:#fff;
-  background:linear-gradient(135deg,var(--c,#ff5fa2),var(--c2,#d81f5f));
-  box-shadow:0 14px 24px -14px var(--c,#ff5fa2), inset 0 2px 0 rgba(255,255,255,.32);
-  transition:transform .12s ease, box-shadow .25s ease, background .3s ease, color .3s ease;
-  touch-action:manipulation;
-  -webkit-appearance:none;appearance:none;
-}
-.done-btn:active{transform:scale(.965)}
-.done-btn .dot{
-  width:28px;height:28px;border-radius:50%;
-  border:3px solid rgba(255,255,255,.85);display:grid;place-items:center;flex:none;
-}
-.done-btn .dot svg{width:17px;height:17px}
-.done-btn .dot svg path{fill:none;stroke:#fff;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round;opacity:0}
-.card.done .done-btn{
-  background:linear-gradient(135deg,#eafff3,#cdffe2);
-  color:#0b7a44;
-  box-shadow:0 12px 22px -16px rgba(11,122,68,.8), inset 0 0 0 2.5px #66e39b;
-}
-.card.done .done-btn .dot{background:#18c46b;border-color:#18c46b}
-.card.done .done-btn .dot svg path{opacity:1}
-.card.pop .done-btn{animation:pop .42s cubic-bezier(.34,1.56,.64,1)}
-@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.05)}100%{transform:scale(1)}}
-
-/* ================= HISTORY ================= */
-.hist{
-  margin-top:30px;border-radius:28px;padding:16px 14px 14px;
-  background:rgba(255,255,255,.88);border:2px solid #fff;
-  box-shadow:0 18px 34px -26px rgba(90,50,140,.6);
-}
-.hist h2{margin:0 0 12px;font-size:15px;font-weight:900;padding:0 4px;display:flex;align-items:center;gap:7px}
-.hist h2 .hi{font-size:17px}
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
-.day{display:flex;flex-direction:column;align-items:center;gap:6px;padding:9px 0 8px;border-radius:16px;background:#fbf8ff;border:1.5px solid #f1ecfa}
-.day.today{background:#fff4fa;border-color:#ffd3e7}
-.day .dw{font-size:11.5px;font-weight:900;color:#9b92b5}
-.day.today .dw{color:#e0357c}
-.ring{position:relative;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--rc,#ff5fa2) calc(var(--p,0) * 1%), #ece7f7 0)}
-.ring::before{content:"";position:absolute;inset:5px;border-radius:50%;background:#fff}
-.ring i{position:relative;font-style:normal;font-size:9.5px;font-weight:900;color:#a89ec4;letter-spacing:-.04em}
-.day.clear .ring i{font-size:12px}
-.day .dd{font-size:10.5px;font-weight:800;color:#b7aecb;font-variant-numeric:tabular-nums}
-.hist-note{margin:12px 4px 0;font-size:12.5px;line-height:1.6;font-weight:600;color:#8b82a6}
-.hist-note b{color:#7b45e8}
-.foot{margin:20px 8px 6px;text-align:center;font-size:12px;line-height:1.7;color:#9a91b4}
-
-/* ================= FIXED DOCK ================= */
-.dock{
-  position:fixed;left:0;right:0;bottom:0;z-index:60;
-  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
-  background:rgba(255,255,255,.92);
-  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-top:1.5px solid #f2ecfb;
-  box-shadow:0 -10px 24px -20px rgba(90,50,140,.8);
-}
-.dock-in{display:flex;align-items:center;gap:11px;max-width:572px;margin:0 auto}
-.dock-txt{flex:none;font-size:13px;font-weight:900;color:#6a6385;font-variant-numeric:tabular-nums}
-.dock-txt b{color:#7b45e8;font-size:15px}
-.dock-bar{flex:1;height:12px;border-radius:999px;background:#f1ecfa;overflow:hidden}
-.dock-bar i{display:block;height:100%;width:0;border-radius:999px;background:var(--rainbow);transition:width .6s cubic-bezier(.22,1,.36,1)}
-.dock-pct{flex:none;font-size:15px;font-weight:900;color:#7b45e8;font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
-
-/* ================= FX ================= */
-#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:90}
+/* ================= TOAST / MODAL ================= */
 .toast{
-  position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom));
-  transform:translate(-50%,18px);opacity:0;pointer-events:none;z-index:120;
-  max-width:88vw;padding:13px 20px;border-radius:999px;
-  font-size:15px;font-weight:900;color:#fff;text-align:center;
-  background:linear-gradient(135deg,#ff5fa2,#a77bff);
-  box-shadow:0 18px 34px -14px rgba(150,60,180,.85);
-  transition:opacity .24s, transform .24s;
+  position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));
+  transform:translate(-50%,14px);opacity:0;pointer-events:none;z-index:120;
+  max-width:88vw;padding:12px 18px;border-radius:999px;
+  font-size:14.5px;font-weight:900;color:#fff;text-align:center;
+  background:var(--navy);box-shadow:0 16px 30px -14px rgba(30,27,90,.7);
+  transition:opacity .22s ease, transform .22s ease;
 }
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .modal{
   position:fixed;inset:0;z-index:130;display:grid;place-items:center;padding:24px;
-  background:rgba(38,20,60,.55);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-  animation:fadeIn .3s ease;
+  background:rgba(40,34,10,.42);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
 }
 .modal[hidden]{display:none}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .modal-card{
-  width:100%;max-width:340px;border-radius:32px;padding:26px 22px 22px;text-align:center;
-  background:linear-gradient(165deg,#ffffff,#fff6fd 60%,#f2fbff);
-  border:3px solid #fff;
-  box-shadow:0 34px 70px -20px rgba(30,10,60,.6);
-  animation:popIn .45s cubic-bezier(.34,1.56,.64,1);
+  width:100%;max-width:330px;border-radius:26px;padding:24px 20px 20px;text-align:center;
+  background:#fff;box-shadow:0 30px 60px -24px rgba(30,20,0,.55);
 }
-@keyframes popIn{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
-.modal-card .big{font-size:52px;line-height:1;margin-bottom:10px}
-.modal-card h3{
-  margin:0;font-size:25px;font-weight:900;letter-spacing:-.05em;
-  background:linear-gradient(135deg,#ff5fa2,#a77bff 60%,#3ec9ff);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
-}
-.modal-card p{margin:9px 0 0;font-size:14.5px;font-weight:700;line-height:1.6;color:#7a719a}
+.modal-card .big{font-size:34px;line-height:1;margin-bottom:8px}
+.modal-card h3{margin:0;font-size:19px;font-weight:900;letter-spacing:-.04em;color:var(--ink)}
+.modal-card p{margin:8px 0 0;font-size:13.5px;font-weight:700;line-height:1.6;color:var(--ink-2);word-break:keep-all}
 .mbtn{
-  width:100%;min-height:54px;border:0;border-radius:18px;
-  font-size:17px;font-weight:900;color:#fff;cursor:pointer;
-  background:linear-gradient(135deg,#ff5fa2,#a77bff);
-  box-shadow:0 14px 26px -14px rgba(150,60,180,.9);
+  flex:1;min-height:52px;border:0;border-radius:16px;cursor:pointer;
+  font-size:16px;font-weight:900;color:#fff;background:var(--navy);
+  transition:transform .12s ease;
+  -webkit-appearance:none;appearance:none;
 }
 .mbtn:active{transform:scale(.97)}
+.mbtn.ghost{background:var(--cream);color:var(--ink-2)}
+.btn-row{display:flex;gap:10px;margin-top:18px}
+
 @media (max-width:345px){
   h1{font-size:20px;gap:6px}
-  h1 .h-ico{font-size:22px}
-  .reset{padding:0 11px;font-size:13px;min-height:42px}
-}
-@media (min-width:600px){
-  .title{font-size:20px}
-  .done-btn{min-height:64px;font-size:21px}
+  .reset{padding:0 12px;font-size:13px;min-height:40px}
+  .thumb{width:66px;height:38px}
+  .t{font-size:14.5px}
 }
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
@@ -380,70 +188,39 @@ h1 .h-ico{font-size:26px;line-height:1}
 </head>
 <body>
 <div class="wrap">
-  <header class="hero" id="hero">
-    <div class="hero-top">
-      <div>
-        <h1><span class="h-ico">💪</span> 운동 퀘스트</h1>
-        <p class="date-line" id="dateLine">오늘의 운동</p>
-      </div>
-      <button class="reset" id="resetBtn" type="button"><span>↻</span>오늘 리셋</button>
-    </div>
+  <header class="top">
+    <h1><span class="ic" aria-hidden="true">✅</span> 세은 운동</h1>
+    <button class="reset" id="resetBtn" type="button"><span aria-hidden="true">↻</span>오늘 리셋</button>
+  </header>
 
-    <div class="hud">
-      <div class="medal" id="medal">F</div>
-      <span class="pct" id="pctNum">0</span><span class="pct-sym">%</span>
-      <span class="cnt"><b id="doneCnt">0</b>/<span id="totalCnt">12</span> 완료</span>
+  <section class="sum" id="sum">
+    <div class="sum-top">
+      <span class="sum-cnt"><b id="doneCnt">0</b>/<span id="totalCnt">12</span> 완료</span>
+      <span class="sum-pct" id="pctNum">0%</span>
     </div>
     <div class="bar"><i id="barFill"></i></div>
-    <div class="chips">
-      <span class="chip chip-xp" id="xpChip">⚡ 0 / 265 XP</span>
-      <span class="chip chip-streak" id="streakChip">🔥 연속 0일</span>
-    </div>
-  </header>
+    <p class="sum-date" id="dateLine">오늘의 운동</p>
+  </section>
 
   <main id="sections"></main>
 
-  <section class="hist">
-    <h2><span class="hi">📅</span> 최근 7일 운동 기록</h2>
-    <div class="week" id="week"></div>
-    <p class="hist-note" id="histNote">7일 중 <b>0일</b> 올클리어</p>
-  </section>
-
   <p class="foot">
-    썸네일을 누르면 유튜브로 바로 이동해요 <span aria-hidden="true">↗</span><br>
-    운동 끝나면 <b>완료!</b> 버튼을 톡 누르면 저장돼요.<br>
-    날짜가 바뀌면 새 퀘스트로 자동 리셋!
+    썸네일을 누르면 유튜브로 바로 이동해요<br>
+    운동을 마치면 오른쪽 동그라미를 눌러 체크해 두세요.<br>
+    날짜가 바뀌면 새로 시작해요.
   </p>
 </div>
 
-<canvas id="confetti" aria-hidden="true"></canvas>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<div class="dock" aria-hidden="true">
-  <div class="dock-in">
-    <span class="dock-txt"><b id="dockDone">0</b>/<span id="dockTotal">12</span> 완료</span>
-    <span class="dock-bar"><i id="dockFill"></i></span>
-    <span class="dock-pct" id="dockPct">0%</span>
-  </div>
-</div>
-
-<div class="modal" id="celebrate" hidden>
-  <div class="modal-card">
-    <div class="big">🎉</div>
-    <h3>오늘 운동 올클리어!</h3>
-    <p id="celebrateMsg"></p>
-    <button class="mbtn" id="celebrateBtn" type="button" style="margin-top:18px">좋아요!</button>
-  </div>
-</div>
 
 <div class="modal" id="resetModal" hidden>
   <div class="modal-card">
-    <div class="big">↻</div>
+    <div class="big" aria-hidden="true">↻</div>
     <h3>오늘 기록을 지울까요?</h3>
-    <p>체크한 운동이 모두 해제돼요.<br>지운 날은 7일 기록에 남지 않아요.</p>
-    <div style="display:flex;gap:10px;margin-top:18px">
-      <button class="mbtn" id="cancelReset" type="button" style="background:#f2ecfb;color:#6a6385;box-shadow:none">취소</button>
-      <button class="mbtn" id="confirmReset" type="button" style="background:linear-gradient(135deg,#ff7a8f,#e8386b)">리셋</button>
+    <p>체크한 운동이 모두 해제됩니다.</p>
+    <div class="btn-row">
+      <button class="mbtn ghost" id="cancelReset" type="button">취소</button>
+      <button class="mbtn" id="confirmReset" type="button">리셋</button>
     </div>
   </div>
 </div>
@@ -461,92 +238,80 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
 
   var GROUPS = [
     {
-      id: 'r1', emoji: '🔥', name: '팔뚝 보스전 · 1라운드', meta: '몸풀기 3개', a: '#ff5fa2', aTint: '#fff0f7', aSoft: '#ffd0e4',
+      id: 'r1', emoji: '💪', name: '몸풀기', meta: '3개 · 가볍게 시작',
       items: [
-        { id: 'arm-1900', img: 'bubu', dur: '8:35', chan: 'Thankyou BUBU',
-          title: '팔뚝살 폭파 운동', sub: '땅끄부부 · 8분 35초', xp: 20,
-          url: 'https://www.youtube.com/watch?v=ZDIIg4kvY-c',
-          c: '#ff3d7f', c2: '#d60f57', tint: '#fff1f7', soft: '#ffc9dd' },
-        { id: 'arm-1920', img: 'jiny', dur: '15:35', chan: '비타민신지니',
-          title: '출렁이는 팔뚝살, 1달만 이 루틴 하세요', sub: '비타민신지니 · 15분 35초', xp: 25,
-          url: 'https://www.youtube.com/watch?v=T-bVqdhqW2U',
-          c: '#b14bff', c2: '#7d1fd6', tint: '#f8f2ff', soft: '#e2cfff' },
-        { id: 'arm-1940', img: 'ppiyak', dur: '8:25', chan: '삐약스핏',
-          title: '팔뚝살 다 빠져도 책임 못 짐', sub: '삐약스핏 · 8분 25초', xp: 20,
-          url: 'https://www.youtube.com/watch?v=Zw44144Pscw',
-          c: '#3d8bff', c2: '#1259cc', tint: '#eff6ff', soft: '#c8dcff' }
+        { id: 'arm-1900', img: 'bubu', chan: 'Thankyou BUBU',
+          title: '팔뚝살 폭파 운동', sub: '땅끄부부 · 8분 35초',
+          url: 'https://www.youtube.com/watch?v=ZDIIg4kvY-c' },
+        { id: 'arm-1920', img: 'jiny', chan: '비타민신지니',
+          title: '출렁이는 팔뚝살, 1달만 이 루틴 하세요', sub: '비타민신지니 · 15분 35초',
+          url: 'https://www.youtube.com/watch?v=T-bVqdhqW2U' },
+        { id: 'arm-1940', img: 'ppiyak', chan: '삐약스핏',
+          title: '팔뚝살 다 빠져도 책임 못 짐', sub: '삐약스핏 · 8분 25초',
+          url: 'https://www.youtube.com/watch?v=Zw44144Pscw' }
       ]
     },
     {
-      id: 'r2', emoji: '💥', name: '팔뚝 보스전 · 2라운드', meta: '본 운동 3개', a: '#7c5cff', aTint: '#f1eeff', aSoft: '#dcd4ff',
+      id: 'r2', emoji: '🔥', name: '본 운동', meta: '3개 · 오늘의 핵심',
       items: [
-        { id: 'arm-2000', img: 'hana5', dur: '7:16', chan: '강하나 스트레칭',
-          title: '매일 5분만 해서 팔뚝살빼자!', sub: '강하나 · 7분 16초', xp: 15,
-          url: 'https://www.youtube.com/watch?v=eRpPqnmb0PM',
-          c: '#00bfae', c2: '#00897c', tint: '#ebfbf8', soft: '#b8eee7' },
-        { id: 'arm-2020', img: 'somi', dur: '10:21', chan: 'SomiFit',
-          title: '논스탑 팔 & 직각어깨 덤벨운동', sub: '소미핏 · 10분 21초', xp: 20,
-          url: 'https://www.youtube.com/watch?v=hgqSlNH_NYo',
-          c: '#25c86a', c2: '#0d9448', tint: '#eefbf2', soft: '#bfeccf' },
-        { id: 'arm-2040', img: 'mizi', dur: '8:23', chan: 'MIZI',
-          title: '일자 팔뚝 만들기 8분 운동', sub: 'MIZI · 8분 23초', xp: 20,
-          url: 'https://www.youtube.com/watch?v=KZdQdzcrMOg',
-          c: '#f0b400', c2: '#c78a00', tint: '#fffbea', soft: '#ffe9a8' }
+        { id: 'arm-2000', img: 'hana5', chan: '강하나 스트레칭',
+          title: '매일 5분만 해서 팔뚝살빼자!', sub: '강하나 · 7분 16초',
+          url: 'https://www.youtube.com/watch?v=eRpPqnmb0PM' },
+        { id: 'arm-2020', img: 'somi', chan: 'SomiFit',
+          title: '논스탑 팔 & 직각어깨 덤벨운동', sub: '소미핏 · 10분 21초',
+          url: 'https://www.youtube.com/watch?v=hgqSlNH_NYo' },
+        { id: 'arm-2040', img: 'mizi', chan: 'MIZI',
+          title: '일자 팔뚝 만들기 8분 운동', sub: 'MIZI · 8분 23초',
+          url: 'https://www.youtube.com/watch?v=KZdQdzcrMOg' }
       ]
     },
     {
-      id: 'r3', emoji: '✨', name: '팔뚝 보스전 · 파이널', meta: '파이널 3개', a: '#00a8e8', aTint: '#eaf8ff', aSoft: '#bfe8ff',
+      id: 'r3', emoji: '✨', name: '마무리 운동', meta: '3개 · 마지막까지',
       items: [
-        { id: 'arm-2100', img: 'jieun', dur: '20:08', chan: '이지은 다이어트',
-          title: '팔뚝 사정없이 돌려깎기 (1세트만!)', sub: '이지은 · 20분 08초', xp: 30,
-          url: 'https://www.youtube.com/watch?v=KblqlOYag5M',
-          c: '#ff4b4b', c2: '#cc1414', tint: '#fff1f1', soft: '#ffc7c7' },
-        { id: 'arm-2120', img: 'bbang', dur: '13:43', chan: '빵느',
-          title: '민소매 라인 만드는 10분 팔운동', sub: '빵느 · 13분 43초', xp: 25,
-          url: 'https://www.youtube.com/watch?v=-qiWY6d3ncw',
-          c: '#7c5cff', c2: '#4a2bd6', tint: '#f4f1ff', soft: '#ddd4ff' },
-        { id: 'arm-2140', img: 'afit_up', dur: '12:05', chan: '에이핏 afit',
-          title: '폼롤러 순환관리 스트레칭 · 상체편', sub: '에이핏 · 12분 05초', xp: 25,
-          url: 'https://www.youtube.com/watch?v=uxwcGYeZUFY',
-          c: '#00a8e8', c2: '#0074a8', tint: '#edf9ff', soft: '#bfe8fb' }
+        { id: 'arm-2100', img: 'jieun', chan: '이지은 다이어트',
+          title: '팔뚝 사정없이 돌려깎기 (1세트만!)', sub: '이지은 · 20분 08초',
+          url: 'https://www.youtube.com/watch?v=KblqlOYag5M' },
+        { id: 'arm-2120', img: 'bbang', chan: '빵느',
+          title: '민소매 라인 만드는 10분 팔운동', sub: '빵느 · 13분 43초',
+          url: 'https://www.youtube.com/watch?v=-qiWY6d3ncw' },
+        { id: 'arm-2140', img: 'afit_up', chan: '에이핏 afit',
+          title: '폼롤러 순환관리 스트레칭 · 상체편', sub: '에이핏 · 12분 05초',
+          url: 'https://www.youtube.com/watch?v=uxwcGYeZUFY' }
       ]
     },
     {
-      id: 'r4', emoji: '🌙', name: '마무리 스트레칭', meta: '하체까지 2개', a: '#2bb673', aTint: '#eafaf1', aSoft: '#c2f0d6',
+      id: 'r4', emoji: '🌙', name: '스트레칭', meta: '2개 · 하체까지',
       items: [
-        { id: 'stretch-lb1', img: 'hana_lb', dur: '11:36', chan: '강하나 스트레칭',
-          title: '하체 스트레칭 · Thinner Legs', sub: '강하나 · 11분 36초', xp: 20,
-          url: 'https://www.youtube.com/watch?v=LZWORB39zQk',
-          c: '#ff8a3d', c2: '#d95f0a', tint: '#fff3ea', soft: '#ffd6b5' },
-        { id: 'stretch-lb2', img: 'afit_lb', dur: '14:23', chan: '에이핏 afit',
-          title: '폼롤러 하체 마사지 & 스트레칭', sub: '에이핏 · 14분 23초', xp: 25,
-          url: 'https://www.youtube.com/watch?v=kOYd2oFOojc',
-          c: '#00b3a4', c2: '#007d72', tint: '#e9fbf8', soft: '#b3ece5' }
+        { id: 'stretch-lb1', img: 'hana_lb', chan: '강하나 스트레칭',
+          title: '하체 스트레칭 · Thinner Legs', sub: '강하나 · 11분 36초',
+          url: 'https://www.youtube.com/watch?v=LZWORB39zQk' },
+        { id: 'stretch-lb2', img: 'afit_lb', chan: '에이핏 afit',
+          title: '폼롤러 하체 마사지 & 스트레칭', sub: '에이핏 · 14분 23초',
+          url: 'https://www.youtube.com/watch?v=kOYd2oFOojc' }
       ]
     },
     {
-      id: 'care', emoji: '💆', name: '마무리 케어', meta: '오늘도 수고했어요', a: '#e055b8', aTint: '#fff0fa', aSoft: '#ffd2ec',
+      id: 'care', emoji: '💆', name: '마무리 케어', meta: '1개 · 오늘도 수고했어요',
       items: [
-        { id: 'care-mask', care: 1, title: '마스크팩 & 립밤', sub: '팩 올리고 립밤 듬뿍 · 자기 전 마무리', xp: 20,
-          tag: 'SELF CARE', ico: '💆',
-          c: '#e853b8', c2: '#a63bd6', tint: '#fdf1ff', soft: '#eed6ff' }
+        { id: 'care-mask', care: 1, ico: '💆',
+          title: '마스크팩 & 립밤', sub: '팩 올리고 립밤 듬뿍 · 자기 전 마무리',
+          url: '' }
       ]
     }
   ];
 
   var ALL = [];
   GROUPS.forEach(function (g, gi) {
-    g.items.forEach(function (it) { ALL.push({ id: it.id, title: it.title, xp: it.xp, group: gi }); });
+    g.items.forEach(function (it) { ALL.push({ id: it.id, group: gi }); });
   });
   var TOTAL_COUNT = ALL.length;
-  var TOTAL_XP = ALL.reduce(function (s, it) { return s + it.xp; }, 0);
   var VALID = {};
   ALL.forEach(function (it) { VALID[it.id] = 1; });
 
   /* ================= 상태 ================= */
   var state = { date: '', checks: {}, history: [], celebrated: '' };
   var els = {};
-  var toastTimer = null, celebrateTimer = null, memoryStore = null;
+  var toastTimer = null, memoryStore = null;
 
   /* ================= 유틸 ================= */
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
@@ -589,8 +354,7 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
         return {
           date: String(h.date),
           pct: Math.max(0, Math.min(100, Math.round(Number(h.pct) || 0))),
-          done: Math.max(0, parseInt(h.done, 10) || 0),
-          xp: Math.max(0, parseInt(h.xp, 10) || 0)
+          done: Math.max(0, parseInt(h.done, 10) || 0)
         };
       }).sort(function (a, b) { return a.date < b.date ? -1 : 1; }).slice(-7);
     }
@@ -599,99 +363,59 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
 
   /* ================= 계산 ================= */
   function computeStats() {
-    var xp = 0, done = 0;
-    ALL.forEach(function (it) { if (state.checks[it.id]) { xp += it.xp; done++; } });
-    var pct = Math.round((xp / TOTAL_XP) * 100);
+    var done = 0;
+    ALL.forEach(function (it) { if (state.checks[it.id]) done++; });
+    var pct = Math.round((done / TOTAL_COUNT) * 100);
     if (pct > 100) pct = 100;
-    return { xp: xp, done: done, pct: pct };
-  }
-  function rankOf(pct) {
-    if (pct >= 100) return { r: 'S', cls: 's' };
-    if (pct >= 80) return { r: 'A', cls: 'a' };
-    if (pct >= 60) return { r: 'B', cls: 'b' };
-    if (pct >= 40) return { r: 'C', cls: 'c' };
-    if (pct >= 20) return { r: 'D', cls: 'd' };
-    if (pct > 0) return { r: 'E', cls: 'e' };
-    return { r: 'F', cls: 'f' };
-  }
-  function histPct(key) {
-    var found = null;
-    state.history.forEach(function (h) { if (h.date === key) found = h; });
-    return found ? found.pct : 0;
-  }
-  function streakDays(st) {
-    var n = 0, d = new Date();
-    if (st.pct < 100) d.setDate(d.getDate() - 1);
-    for (var i = 0; i < 180; i++) {
-      var key = fmtKey(d);
-      var pct = (key === state.date) ? st.pct : histPct(key);
-      if (pct >= 100) { n++; d.setDate(d.getDate() - 1); } else break;
-    }
-    return n;
+    return { done: done, pct: pct };
   }
 
   /* ================= 마크업 ================= */
-  function cardHTML(it) {
-    var style = '--c:' + it.c + ';--c2:' + it.c2 + ';--tint:' + it.tint + ';--soft:' + it.soft;
+  function rowHTML(it) {
     var media;
     if (it.img) {
-      var src = THUMBS[it.img] || '';
       media = '<a class="thumb" href="' + it.url + '" target="_blank" rel="noopener noreferrer"'
         + ' aria-label="' + esc(it.title) + ' 유튜브에서 열기">'
-        + (src ? '<img src="' + src + '" alt="' + esc(it.title) + ' 썸네일" decoding="async">' : '')
+        + (THUMBS[it.img] ? '<img src="' + THUMBS[it.img] + '" alt="" decoding="async">' : '')
         + '<span class="play" aria-hidden="true"></span>'
-        + '<span class="play-txt">▶ 바로 재생</span>'
         + '</a>';
     } else {
-      media = '<div class="banner' + (it.care ? ' care' : '') + '" aria-hidden="true">'
-        + '<span class="b-tag">' + esc(it.tag || 'GYM DAY') + '</span>'
-        + '<span class="b-ico">' + (it.ico || '🏋️') + '</span>'
-        + '</div>';
+      media = '<span class="thumb emoji" aria-hidden="true">' + (it.ico || '💆') + '</span>';
     }
-    return '<article class="card" data-id="' + it.id + '" style="' + style + '">'
+    return '<div class="row" data-id="' + it.id + '">'
       + media
-      + '<div class="meta">'
-      + '<div class="row2"><span class="badge" data-badge>다음</span>'
-      + (it.chan ? '<span class="chan">' + esc(it.chan) + '</span>' : '')
-      + '</div>'
-      + '<h3 class="title">' + esc(it.title) + '</h3>'
-      + '<p class="sub">' + esc(it.sub) + '</p>'
-      + '<div class="xp-line">+' + it.xp + ' XP</div>'
-      + '<button class="done-btn" type="button" data-id="' + it.id + '" aria-pressed="false">'
-      + '<span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.5 12.6l4.9 4.9L19.6 6.8"/></svg></span>'
-      + '<span data-lbl>완료!</span>'
+      + '<button class="hit" type="button" data-id="' + it.id + '" aria-pressed="false">'
+      + '<span class="body"><span class="t">' + esc(it.title) + '</span>'
+      + '<span class="s">' + esc(it.sub) + '</span></span>'
+      + '<span class="chk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.8 12.7l4.7 4.7L19.4 6.5"/></svg></span>'
       + '</button>'
-      + '</div>'
-      + '</article>';
+      + '</div>';
   }
 
   function render() {
     els.sections.innerHTML = GROUPS.map(function (g) {
-      return '<section class="sec">'
-        + '<div class="sec-head" style="--a:' + g.a + ';--a-tint:' + g.aTint + ';--a-soft:' + g.aSoft + '">'
-        + '<span class="sec-ico" aria-hidden="true">' + g.emoji + '</span>'
-        + '<h2>' + esc(g.name) + (g.meta ? '<span class="sec-meta">' + esc(g.meta) + '</span>' : '') + '</h2>'
-        + '<span class="sec-cnt" data-count="' + g.id + '">0/' + g.items.length + '</span>'
+      return '<section class="card" data-group="' + g.id + '">'
+        + '<div class="c-head">'
+        + '<span class="c-ico" aria-hidden="true">' + g.emoji + '</span>'
+        + '<div class="c-tit"><h2 class="c-name">' + esc(g.name) + '</h2>'
+        + '<span class="c-meta">' + esc(g.meta) + '</span></div>'
+        + '<span class="c-cnt" data-count="' + g.id + '">0/' + g.items.length + '</span>'
         + '</div>'
-        + '<div class="cards">' + g.items.map(cardHTML).join('') + '</div>'
+        + '<div class="c-bar"><i data-bar="' + g.id + '"></i></div>'
+        + '<div class="rows">' + g.items.map(rowHTML).join('') + '</div>'
         + '</section>';
     }).join('');
   }
 
   /* ================= 동기화 ================= */
-  function syncCards() {
-    var nodes = document.querySelectorAll('.card');
+  function syncRows() {
+    var nodes = document.querySelectorAll('.row');
     for (var i = 0; i < nodes.length; i++) {
       var el = nodes[i];
-      var id = el.getAttribute('data-id');
-      var on = !!state.checks[id];
+      var on = !!state.checks[el.getAttribute('data-id')];
       if (on) el.classList.add('done'); else el.classList.remove('done');
-      var btn = el.querySelector('.done-btn');
-      if (btn) {
-        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-        var lbl = btn.querySelector('[data-lbl]');
-        if (lbl) lbl.textContent = on ? '클리어!' : '완료!';
-      }
+      var btn = el.querySelector('.hit');
+      if (btn) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
     }
   }
 
@@ -699,85 +423,47 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
     GROUPS.forEach(function (g) {
       var done = 0;
       g.items.forEach(function (it) { if (state.checks[it.id]) done++; });
-      var el = document.querySelector('[data-count="' + g.id + '"]');
-      if (el) el.textContent = done + '/' + g.items.length;
+      var cnt = document.querySelector('[data-count="' + g.id + '"]');
+      if (cnt) cnt.textContent = done + '/' + g.items.length;
+      var bar = document.querySelector('[data-bar="' + g.id + '"]');
+      if (bar) bar.style.width = Math.round((done / g.items.length) * 100) + '%';
+      var card = document.querySelector('[data-group="' + g.id + '"]');
+      if (card) card.classList.toggle('full', done === g.items.length);
     });
   }
 
-  function renderWeek(st) {
-    var html = '', cleared = 0;
-    var hues = ['#ff3d7f', '#ff8a4d', '#f0b400', '#25c86a', '#00a8e8', '#7c5cff', '#ff5fa2'];
-    for (var i = 6; i >= 0; i--) {
-      var d = new Date();
-      d.setDate(d.getDate() - i);
-      var key = fmtKey(d);
-      var isToday = (key === state.date);
-      var pct = isToday ? st.pct : histPct(key);
-      if (pct >= 100) cleared++;
-      var inner = pct >= 100 ? '✓' : (pct > 0 ? String(pct) : '');
-      html += '<div class="day' + (isToday ? ' today' : '') + (pct >= 100 ? ' clear' : '') + '">'
-        + '<span class="dw">' + WEEKDAYS[d.getDay()] + '</span>'
-        + '<span class="ring" style="--p:' + pct + ';--rc:' + hues[(6 - i) % hues.length] + '"><i>' + inner + '</i></span>'
-        + '<span class="dd">' + d.getDate() + '</span>'
-        + '</div>';
-    }
-    els.week.innerHTML = html;
-    els.histNote.innerHTML = '7일 중 <b>' + cleared + '일</b> 올클리어 · 연속 <b>' + streakDays(st) + '일</b> 째';
-  }
-
-  function syncDashboard() {
+  function syncSummary() {
     var st = computeStats();
-    var rank = rankOf(st.pct);
-    els.pctNum.textContent = String(st.pct);
     els.doneCnt.textContent = String(st.done);
     els.totalCnt.textContent = String(TOTAL_COUNT);
+    els.pctNum.textContent = st.pct + '%';
     els.barFill.style.width = st.pct + '%';
-    els.xpChip.textContent = '⚡ ' + st.xp + ' / ' + TOTAL_XP + ' XP';
-    els.streakChip.textContent = '🔥 연속 ' + streakDays(st) + '일';
-    els.medal.textContent = rank.r;
-    els.medal.className = 'medal medal-' + rank.cls;
-    els.hero.classList.toggle('cleared', st.pct >= 100);
-    els.dockDone.textContent = String(st.done);
-    els.dockTotal.textContent = String(TOTAL_COUNT);
-    els.dockFill.style.width = st.pct + '%';
-    els.dockPct.textContent = st.pct + '%';
-    renderWeek(st);
+    els.sum.classList.toggle('full', st.done === TOTAL_COUNT);
 
-    if (st.pct < 100 && state.celebrated === state.date) { state.celebrated = ''; save(); }
-    if (st.pct >= 100 && state.celebrated !== state.date) {
+    if (st.done < TOTAL_COUNT && state.celebrated === state.date) { state.celebrated = ''; save(); }
+    if (st.done === TOTAL_COUNT && state.celebrated !== state.date) {
       state.celebrated = state.date;
       save();
-      launchConfetti();
-      openCelebrate(st);
+      toast('오늘 운동 ' + TOTAL_COUNT + '개 모두 완료! 💛');
     }
     return st;
   }
 
-  function syncAll() { syncCards(); syncSections(); var st = syncDashboard(); updateNow(); return st; }
+  function syncAll() { syncRows(); syncSections(); return syncSummary(); }
 
   /* ================= 액션 ================= */
-  function toggleQuest(id, card) {
+  function toggleQuest(id) {
     var on = !state.checks[id];
     if (on) state.checks[id] = 1; else delete state.checks[id];
     save();
-    var st = syncAll();
+    syncAll();
     if (on) {
-      if (card) {
-        card.classList.remove('pop');
-        void card.offsetWidth;
-        card.classList.add('pop');
-      }
       if (navigator.vibrate) navigator.vibrate(14);
-      burstAt(card || document.body);
-      var item = null;
-      ALL.forEach(function (it) { if (it.id === id) item = it; });
-      if (item && st.pct < 100) {
-        var short = item.title.length > 15 ? item.title.slice(0, 15) + '…' : item.title;
-        toast('✅ ' + short + ' · +' + item.xp + ' XP');
-      }
+      var st = computeStats();
+      if (st.done < TOTAL_COUNT) toast('✓ 완료했어요');
     } else {
-      if (navigator.vibrate) navigator.vibrate([8, 30, 8]);
-      toast('↩︎ 체크를 되돌렸어요');
+      if (navigator.vibrate) navigator.vibrate([8, 26, 8]);
+      toast('체크를 해제했어요');
     }
   }
 
@@ -787,126 +473,7 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
     state.celebrated = '';
     save();
     syncAll();
-    toast('오늘 기록을 리셋했어요. 다시 시작!');
-  }
-
-  function openCelebrate(st) {
-    if (!els.celebrate) return;
-    els.celebrateMsg.innerHTML = TOTAL_COUNT + '개 운동 전부 완료!<br>오늘 ' + st.xp + ' XP 획득';
-    els.celebrate.hidden = false;
-    if (celebrateTimer) window.clearTimeout(celebrateTimer);
-    celebrateTimer = window.setTimeout(function () { els.celebrate.hidden = true; }, 6000);
-  }
-  function closeCelebrate() {
-    if (celebrateTimer) window.clearTimeout(celebrateTimer);
-    els.celebrate.hidden = true;
-  }
-
-  /* ================= NOW 표시 ================= */
-  function updateNow() {
-    var targetId = null;
-    for (var i = 0; i < ALL.length; i++) {
-      if (!state.checks[ALL[i].id]) { targetId = ALL[i].id; break; }
-    }
-    var nodes = document.querySelectorAll('.card');
-    for (var j = 0; j < nodes.length; j++) {
-      var el = nodes[j];
-      var isTarget = (el.getAttribute('data-id') === targetId);
-      var badge = el.querySelector('[data-badge]');
-      if (badge) { if (isTarget) badge.classList.add('on'); else badge.classList.remove('on'); }
-      if (isTarget) el.classList.add('is-now'); else el.classList.remove('is-now');
-    }
-  }
-
-  /* ================= 연출 ================= */
-  function toast(msg) {
-    els.toast.textContent = msg;
-    els.toast.classList.add('on');
-    if (toastTimer) window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(function () { els.toast.classList.remove('on'); }, 1900);
-  }
-
-  var fx = { ctx: null, W: 0, H: 0, parts: [], raf: 0 };
-
-  function ctxReady() {
-    var canvas = els.confetti;
-    if (!canvas || !canvas.getContext) return null;
-    var ctx = canvas.getContext('2d');
-    if (!ctx) return null;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    fx.W = window.innerWidth; fx.H = window.innerHeight;
-    canvas.width = Math.round(fx.W * dpr);
-    canvas.height = Math.round(fx.H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    fx.ctx = ctx;
-    return fx;
-  }
-
-  function spawn(opt) {
-    var colors = opt.colors || ['#ff5fa2'];
-    for (var i = 0; i < opt.count; i++) {
-      var ang = (Math.random() - 0.5) * Math.PI * 2 * (opt.spread || 0.5);
-      var sp = Math.random() * (opt.power || 8) + 1.5;
-      fx.parts.push({
-        x: opt.x + (Math.random() - 0.5) * 16,
-        y: opt.y + (Math.random() - 0.5) * 16,
-        vx: Math.sin(ang) * sp,
-        vy: -Math.abs(Math.cos(ang)) * sp - 1.5,
-        g: opt.gravity || 0.32,
-        w: 4 + Math.random() * 7, h: 4 + Math.random() * 7,
-        rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.4,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        born: performance.now(), life: opt.life || 2500
-      });
-    }
-    if (!fx.raf) {
-      var last = performance.now();
-      var step = function (t) {
-        draw(t, t - last); last = t;
-        if (fx.parts.length) fx.raf = window.requestAnimationFrame(step);
-        else { fx.raf = 0; if (fx.ctx) fx.ctx.clearRect(0, 0, fx.W, fx.H); }
-      };
-      fx.raf = window.requestAnimationFrame(step);
-    }
-  }
-
-  function draw(t, dtMs) {
-    var ctx = fx.ctx;
-    if (!ctx) return;
-    var dt = Math.min(2.4, (dtMs || 16.7) / 16.667);
-    ctx.clearRect(0, 0, fx.W, fx.H);
-    var keep = [];
-    for (var i = 0; i < fx.parts.length; i++) {
-      var p = fx.parts[i];
-      var age = t - p.born;
-      if (age > p.life) continue;
-      p.vy += p.g * dt; p.vx *= 0.994;
-      p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.vr * dt;
-      if (p.y > fx.H + 80) continue;
-      ctx.save();
-      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-      ctx.globalAlpha = Math.max(0, 1 - age / p.life);
-      ctx.fillStyle = p.color;
-      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-      ctx.restore();
-      keep.push(p);
-    }
-    fx.parts = keep;
-  }
-
-  function burstAt(el) {
-    var f = ctxReady();
-    if (!f) return;
-    var r = el.getBoundingClientRect ? el.getBoundingClientRect() : { top: 0, height: 0, right: 0 };
-    spawn({ x: Math.min(f.W - 30, r.right - 30), y: r.top + r.height * 0.8, count: 24, power: 7, life: 1600,
-      colors: ['#ff5fa2', '#ffb02e', '#ffe680', '#25c86a', '#00a8e8', '#a77bff', '#ffffff'] });
-  }
-
-  function launchConfetti() {
-    var f = ctxReady();
-    if (!f) return;
-    spawn({ x: f.W / 2, y: f.H * 0.28, count: 170, power: 13, life: 4200, gravity: 0.3, spread: 1.15,
-      colors: ['#ff3d7f', '#ff8a4d', '#ffd93d', '#25c86a', '#4bc8ff', '#a77bff', '#ffffff'] });
+    toast('오늘 기록을 지웠어요');
   }
 
   /* ================= 날짜 넘김 ================= */
@@ -920,7 +487,7 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
     var key = todayKey();
     if (state.date === key) return false;
     var st = computeStats();
-    if (state.date) pushHistory({ date: state.date, pct: st.pct, done: st.done, xp: st.xp });
+    if (state.date) pushHistory({ date: state.date, pct: st.pct, done: st.done });
     state.date = key;
     state.checks = {};
     state.celebrated = '';
@@ -928,69 +495,58 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
     return true;
   }
 
+  /* ================= 연출 ================= */
+  function toast(msg) {
+    els.toast.textContent = msg;
+    els.toast.classList.add('on');
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () { els.toast.classList.remove('on'); }, 1900);
+  }
+
   /* ================= 이벤트 ================= */
   function bind() {
     document.addEventListener('click', function (e) {
-      var btn = e.target.closest ? e.target.closest('.done-btn') : null;
+      var btn = e.target.closest ? e.target.closest('.hit') : null;
       if (!btn) return;
-      var card = btn.closest('.card');
-      toggleQuest(btn.getAttribute('data-id'), card);
+      toggleQuest(btn.getAttribute('data-id'));
     });
 
     els.resetBtn.addEventListener('click', function () { els.resetModal.hidden = false; });
     els.cancelReset.addEventListener('click', function () { els.resetModal.hidden = true; });
     els.confirmReset.addEventListener('click', doReset);
     els.resetModal.addEventListener('click', function (e) { if (e.target === els.resetModal) els.resetModal.hidden = true; });
-    els.celebrateBtn.addEventListener('click', closeCelebrate);
-    els.celebrate.addEventListener('click', function (e) { if (e.target === els.celebrate) closeCelebrate(); });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { els.resetModal.hidden = true; closeCelebrate(); }
-    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') els.resetModal.hidden = true; });
     document.addEventListener('visibilitychange', function () { if (!document.hidden) tick(); });
-    window.addEventListener('resize', function () { if (fx.parts.length) ctxReady(); });
   }
 
   function tick() {
     if (rolloverIfNeeded()) {
-      render(); syncAll();
-      toast('날짜가 바뀌어 새 운동 퀘스트가 시작됐어요');
+      syncAll();
+      toast('날짜가 바뀌어 오늘 운동이 새로 시작됐어요');
       return;
     }
-    syncCards(); syncDashboard(); updateNow();
+    syncAll();
   }
 
   /* ================= 시작 ================= */
   function init() {
-    els.hero = document.getElementById('hero');
-    els.dateLine = document.getElementById('dateLine');
-    els.medal = document.getElementById('medal');
-    els.pctNum = document.getElementById('pctNum');
+    els.sum = document.getElementById('sum');
     els.doneCnt = document.getElementById('doneCnt');
     els.totalCnt = document.getElementById('totalCnt');
+    els.pctNum = document.getElementById('pctNum');
     els.barFill = document.getElementById('barFill');
-    els.xpChip = document.getElementById('xpChip');
-    els.streakChip = document.getElementById('streakChip');
+    els.dateLine = document.getElementById('dateLine');
     els.sections = document.getElementById('sections');
-    els.week = document.getElementById('week');
-    els.histNote = document.getElementById('histNote');
     els.toast = document.getElementById('toast');
-    els.confetti = document.getElementById('confetti');
     els.resetBtn = document.getElementById('resetBtn');
     els.resetModal = document.getElementById('resetModal');
     els.cancelReset = document.getElementById('cancelReset');
     els.confirmReset = document.getElementById('confirmReset');
-    els.celebrate = document.getElementById('celebrate');
-    els.celebrateMsg = document.getElementById('celebrateMsg');
-    els.celebrateBtn = document.getElementById('celebrateBtn');
-    els.dockDone = document.getElementById('dockDone');
-    els.dockTotal = document.getElementById('dockTotal');
-    els.dockFill = document.getElementById('dockFill');
-    els.dockPct = document.getElementById('dockPct');
 
     load();
     var rolled = rolloverIfNeeded();
     var d = new Date();
-    els.dateLine.textContent = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + WEEKDAYS[d.getDay()] + '요일 · 퀘스트 ' + TOTAL_COUNT + '개';
+    els.dateLine.textContent = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + WEEKDAYS[d.getDay()] + '요일 · 운동 ' + TOTAL_COUNT + '개';
     render();
     syncAll();
     bind();

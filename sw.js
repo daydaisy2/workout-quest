@@ -1,6 +1,6 @@
-/* 운동 퀘스트 PWA 서비스워커 - network-first, 오프라인은 캐시로 */
-var CACHE = 'workout-quest-v1';
-var ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+/* 세은 운동 PWA 서비스워커 - network-first, 오프라인은 캐시로 */
+var CACHE = 'seeun-workout-v2';
+var ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-192.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', function (e) {
   self.skipWaiting();
