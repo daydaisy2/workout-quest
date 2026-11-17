@@ -468,12 +468,41 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
   }
 
   function doReset() {
-    els.resetModal.hidden = true;
+    closeReset();
     state.checks = {};
     state.celebrated = '';
     save();
     syncAll();
     toast('오늘 기록을 지웠어요');
+  }
+
+  /* ================= 안드로이드 뒤로가기 — 열린 팝업만 닫기 =================
+     리셋 확인 팝업을 열 때 히스토리를 하나 쌓고, 뒤로가기(popstate)에서는
+     앱을 나가지 않고 열려 있는 팝업만 닫는다. */
+  var navHistPushed = false, navSelfBack = false;
+  function pushResetHistory() {
+    if (navHistPushed) return;
+    try { history.pushState({ appModal: true }, ''); navHistPushed = true; } catch (e) {}
+  }
+  function settleResetHistory() {
+    if (!navHistPushed) return;
+    setTimeout(function () {
+      if (!navHistPushed) return;                       /* 이미 정리됐거나 뒤로가기로 소비됨 */
+      if (!els.resetModal.hidden) return;               /* 팝업이 아직 열려 있음 */
+      navHistPushed = false;
+      if (history.state && history.state.appModal) {
+        navSelfBack = true;
+        try { history.back(); } catch (e) { navSelfBack = false; }
+      }
+    }, 0);
+  }
+  function openReset() {
+    els.resetModal.hidden = false;
+    pushResetHistory();
+  }
+  function closeReset() {
+    els.resetModal.hidden = true;
+    settleResetHistory();
   }
 
   /* ================= 날짜 넘김 ================= */
@@ -511,11 +540,17 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
       toggleQuest(btn.getAttribute('data-id'));
     });
 
-    els.resetBtn.addEventListener('click', function () { els.resetModal.hidden = false; });
-    els.cancelReset.addEventListener('click', function () { els.resetModal.hidden = true; });
+    els.resetBtn.addEventListener('click', openReset);
+    els.cancelReset.addEventListener('click', closeReset);
     els.confirmReset.addEventListener('click', doReset);
-    els.resetModal.addEventListener('click', function (e) { if (e.target === els.resetModal) els.resetModal.hidden = true; });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') els.resetModal.hidden = true; });
+    els.resetModal.addEventListener('click', function (e) { if (e.target === els.resetModal) closeReset(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeReset(); });
+    window.addEventListener('popstate', function () {
+      if (navSelfBack) { navSelfBack = false; return; }   /* 정리용 back() — 무시 */
+      if (els.resetModal.hidden) return;
+      navHistPushed = false;   /* 엔트리는 방금 소비됐다 */
+      closeReset();
+    });
     document.addEventListener('visibilitychange', function () { if (!document.hidden) tick(); });
   }
 
