@@ -1,5 +1,5 @@
 /* 세은 운동 PWA 서비스워커 - network-first, 오프라인은 캐시로 */
-var CACHE = 'seeun-workout-v6';
+var CACHE = 'seeun-workout-v7';
 var ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-192.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', function (e) {
@@ -20,6 +20,8 @@ self.addEventListener('fetch', function (e) {
   if (req.method !== 'GET') return;
   var url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
+  /* robots.txt 는 서비스워커가 가로채지 않는다 — 검색 로봇이 늘 서버 응답을 받도록 */
+  if (url.pathname.slice(-10) === '/robots.txt') return;
 
   e.respondWith(
     fetch(req).then(function (res) {

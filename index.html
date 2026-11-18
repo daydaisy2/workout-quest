@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#FBE049">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -254,9 +255,51 @@ h1 .ic{font-size:22px;line-height:1}
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
 }
+
+/* ================= 입장 잠금 ================= */
+body.locked{overflow:hidden}
+body.locked .wrap{display:none !important}
+#lock{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:22px;background:var(--yellow);overflow-y:auto}
+.lock-card{width:100%;max-width:344px;background:#fff;border-radius:26px;padding:26px 22px 20px;text-align:center;
+  box-shadow:0 18px 44px rgba(112,86,0,.20)}
+.lock-fl{font-size:40px;line-height:1}
+.lock-title{margin:6px 0 0;font-size:26px;font-weight:900;letter-spacing:-.03em;color:var(--navy);line-height:1.1}
+.lock-tag{margin:7px 0 0;font-size:12.5px;font-weight:700;color:var(--ink-2);letter-spacing:-.01em}
+.lock-badge{display:inline-block;margin:14px 0 0;padding:5px 11px;border-radius:999px;background:var(--cream);color:#7C765C;font-size:11.5px;font-weight:800}
+.lock-dots{display:flex;justify-content:center;gap:13px;margin:20px 0 2px;height:16px}
+.lock-dots i{display:block;width:14px;height:14px;border-radius:50%;background:#EDE7D1;transition:transform .12s,background .12s}
+.lock-dots i.on{background:var(--navy);transform:scale(1.06)}
+.lock-msg{margin:10px 0 0;min-height:16px;font-size:12px;font-weight:800;color:#C0392B}
+.lock-msg.ok{color:var(--done-ink)}
+.lock-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:8px}
+.lock-key{height:52px;border:0;border-radius:17px;background:var(--cream);color:var(--navy);
+  font-family:inherit;font-size:21px;font-weight:900;cursor:pointer}
+.lock-key:active{background:#F5EED6}
+.lock-key.ghost{font-size:13px;font-weight:800;color:var(--ink-2)}
+.lock-foot{margin:14px 0 0;font-size:11px;font-weight:700;color:#A9A48D;line-height:1.5}
+.lock-card.shake{animation:lockShake .34s}
+@keyframes lockShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 </style>
 </head>
-<body>
+<body class="locked">
+<div id="lock" role="dialog" aria-modal="true" aria-label="입장 비밀번호">
+  <div class="lock-card" id="lockCard">
+    <div class="lock-fl">💪</div>
+    <div class="lock-title">세은 운동</div>
+    <p class="lock-tag">매일 저녁 팔뚝 운동 체크</p>
+    <span class="lock-badge">🔒 나만 보는 운동 기록</span>
+    <div class="lock-dots" id="lockDots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <p class="lock-msg" id="lockMsg"></p>
+    <div class="lock-pad" id="lockPad">
+      <button type="button" class="lock-key" data-k="1">1</button><button type="button" class="lock-key" data-k="2">2</button><button type="button" class="lock-key" data-k="3">3</button>
+      <button type="button" class="lock-key" data-k="4">4</button><button type="button" class="lock-key" data-k="5">5</button><button type="button" class="lock-key" data-k="6">6</button>
+      <button type="button" class="lock-key" data-k="7">7</button><button type="button" class="lock-key" data-k="8">8</button><button type="button" class="lock-key" data-k="9">9</button>
+      <button type="button" class="lock-key ghost" data-k="clear">전체</button><button type="button" class="lock-key" data-k="0">0</button><button type="button" class="lock-key ghost" data-k="del" aria-label="지우기">←</button>
+    </div>
+    <p class="lock-foot">두 분만 아는 6자리 비밀번호를 입력하면<br>이 기기에서는 다음부터 바로 열려요</p>
+  </div>
+</div>
+
 <div class="wrap">
   <header class="top">
     <h1><span class="ic" aria-hidden="true">✅</span> 세은 운동</h1>
@@ -814,8 +857,100 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
     window.setInterval(tick, 30000);
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  /* ================= 입장 잠금 =================
+     비밀번호는 코드에 적지 않는다. SHA-256 해시로만 비교하고,
+     한 번 통과한 기기는 localStorage 에 표시만 남겨 다음부터 바로 열린다.
+     잠금을 통과하기 전에는 운동 목록을 그리지 않는다(화면·기록 모두 가림). */
+  var LOCK_KEY = 'seeuni.lock.v1';
+  var LOCK_SALT = 'workout::v1::';
+  var LOCK_HASH = '6ff43d58645ececf63578b66b5a6e95fc634ee6c6dfeebe2550e6dfea3612646';
+  var lockBuf = '', lockBusy = false;
+
+  function lockPaint() {
+    var dots = document.querySelectorAll('#lockDots i');
+    for (var i = 0; i < dots.length; i++) dots[i].classList.toggle('on', i < lockBuf.length);
+  }
+  function lockMsg(text, ok) {
+    var m = document.getElementById('lockMsg');
+    if (!m) return;
+    m.className = 'lock-msg' + (ok ? ' ok' : '');
+    m.textContent = text || '';
+  }
+  function sha256Hex(s) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+        return ('0' + b.toString(16)).slice(-2);
+      }).join('');
+    });
+  }
+  function lockPassed() {
+    try {
+      var v = JSON.parse(window.localStorage.getItem(LOCK_KEY) || 'null');
+      return !!(v && v.h === LOCK_HASH);
+    } catch (e) { return false; }
+  }
+  function lockRemove() {
+    var el = document.getElementById('lock');
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+    document.body.classList.remove('locked');
+  }
+  function lockTry() {
+    if (lockBusy || lockBuf.length !== 6) return;
+    lockBusy = true;
+    lockMsg('확인 중…');
+    if (!(window.crypto && crypto.subtle)) {
+      lockMsg('보안 연결(https)에서 열어 주세요');
+      lockBusy = false; return;
+    }
+    sha256Hex(LOCK_SALT + lockBuf).then(function (h) {
+      if (h !== LOCK_HASH) {
+        lockMsg('비밀번호가 맞지 않아요');
+        var c = document.getElementById('lockCard');
+        if (c) { c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); }
+        lockBuf = ''; lockPaint();
+        lockBusy = false; return;
+      }
+      try { window.localStorage.setItem(LOCK_KEY, JSON.stringify({ h: LOCK_HASH, at: Date.now() })); } catch (e) {}
+      lockMsg('열리는 중…', true);
+      lockBusy = false;
+      lockRemove();
+      init();
+    }).catch(function () {
+      lockMsg('잠시 후 다시 시도해 주세요');
+      lockBusy = false;
+    });
+  }
+  function lockKey(k) {
+    lockMsg('');
+    if (k === 'del') { lockBuf = lockBuf.slice(0, -1); lockPaint(); return; }
+    if (k === 'clear') { lockBuf = ''; lockPaint(); return; }
+    if (lockBuf.length >= 6) return;
+    lockBuf += k; lockPaint();
+    if (lockBuf.length === 6) window.setTimeout(lockTry, 110);
+  }
+  function initLock() {
+    lockBuf = ''; lockPaint(); lockMsg('');
+    var pad = document.getElementById('lockPad');
+    if (pad) pad.addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('[data-k]') : null;
+      if (b) lockKey(b.getAttribute('data-k'));
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!document.getElementById('lock')) return;
+      if (/^\d$/.test(e.key)) lockKey(e.key);
+      else if (e.key === 'Backspace') lockKey('del');
+      else if (e.key === 'Enter' && lockBuf.length === 6) lockTry();
+    });
+  }
+
+  /* 시작: 이미 통과한 기기면 바로, 아니면 잠글 화면부터 */
+  function start() {
+    if (lockPassed()) { lockRemove(); init(); return; }
+    initLock();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
 })();
 </script>
 <script>
