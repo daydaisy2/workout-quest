@@ -829,17 +829,19 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
   var DB_URL = 'https://bubulife-678ac-default-rtdb.firebaseio.com';
   var ROOM_RE = /^[A-Za-z0-9_-]{8,64}$/;
   var ROOM = '';
-  (function () {
+  function resolveRoom() {
     try {
       var q = '';
       try { q = new URLSearchParams(location.search).get('room') || ''; } catch (e) { q = ''; }
-      if (ROOM_RE.test(q)) { try { window.localStorage.setItem('seeuni.room', q); } catch (e) {} ROOM = q; return; }
+      if (ROOM_RE.test(q)) { try { window.localStorage.setItem('seeuni.room', q); } catch (e) {} return q; }
       var a = window.localStorage.getItem('seeuni.room') || '';
-      if (ROOM_RE.test(a)) { ROOM = a; return; }
+      if (ROOM_RE.test(a)) return a;
       var b = window.localStorage.getItem('bubu.room') || '';
-      if (ROOM_RE.test(b)) { try { window.localStorage.setItem('seeuni.room', b); } catch (e) {} ROOM = b; }
-    } catch (e) { ROOM = ''; }
-  })();
+      if (ROOM_RE.test(b)) { try { window.localStorage.setItem('seeuni.room', b); } catch (e) {} return b; }
+    } catch (e) {}
+    return '';
+  }
+  ROOM = resolveRoom();
 
   var ST = { weights: {} };
   var WT_MIN = 20, WT_MAX = 300;   /* 오타(0.5, 500)를 거르는 넉넉한 범위 */
@@ -1325,6 +1327,11 @@ var THUMBS = {"bubu":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAY
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) return;
       tick();
+      /* 앱을 다시 열었을 때 부부 할일이 남긴 방 키가 생겼으면 그때 연결한다 */
+      if (!ROOM) {
+        var r = resolveRoom();
+        if (r) { ROOM = r; initWeight(); }
+      }
       if (ROOM && !wtEs) wtSyncNow(true);
     });
     window.addEventListener('resize', function () { wtPaint(); });
